@@ -1,6 +1,6 @@
 pipeline {
    agent any
-
+   stages{
    stage('Build') {
    steps{bat(/"%MVN_HOME%\bin\mvn" -Dmaven.test.failure.ignore clean package/)}
       // Run the maven build
@@ -16,5 +16,6 @@ pipeline {
 
       junit '**/target/surefire-reports/TEST-*.xml'
       archiveArtifacts 'target/*.jar'
+   }
    }
 }
