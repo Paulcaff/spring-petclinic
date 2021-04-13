@@ -2,7 +2,7 @@ pipeline {
    agent any
    stages{
    stage('Build') {
-   steps{bat(/"%MVN_HOME%\bin\mvn" -Dmaven.test.failure.ignore clean package/)}
+   steps{bat('mvn clean package')}
       // Run the maven build
 //       withEnv(["MVN_HOME=$mvnHome"]) {
 //          if (isUnix()) {
