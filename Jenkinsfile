@@ -26,7 +26,7 @@ pipeline {
            bat 'docker push paulcaff/petclinic:0.1'
        }
    }
-       stage("Push Docker"){
+       stage("aws"){
               steps{
                 sshagent(['awsKey']) {
                            // some block
