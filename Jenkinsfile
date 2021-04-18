@@ -28,11 +28,11 @@ pipeline {
    }
        stage("aws"){
               steps{
-                sshagent(['awsKey']) {
+                sshagent(['awskey']) {
                            // some block
-                           sh "ssh -o StrictHostKeyChecking=no ec2-user@34.240.121.213 docker stop pet_clinic || true"
-                           sh "ssh -o StrictHostKeyChecking=no ec2-user@34.240.121.213 docker rm pet_clinic || true"
-                           sh "ssh -o StrictHostKeyChecking=no ec2-user@34.240.121.213 docker rmi \$(docker images -a -q) || true"
+                           //sh "ssh -o StrictHostKeyChecking=no ec2-user@34.240.121.213 docker stop pet_clinic || true"
+                           //sh "ssh -o StrictHostKeyChecking=no ec2-user@34.240.121.213 docker rm pet_clinic || true"
+                           //sh "ssh -o StrictHostKeyChecking=no ec2-user@34.240.121.213 docker rmi \$(docker images -a -q) || true"
                            sh "ssh -o StrictHostKeyChecking=no ec2-user@34.240.121.213 docker run -p 8080:8080 -d --name pet_clinic paulcaff/petclinic:0.1"
                        }
 
