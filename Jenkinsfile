@@ -3,7 +3,7 @@ pipeline {
    stages{
     stage('Build') {
         steps{
-            bat "echo 'here steps'"
+            bat "dir"
             bat 'mvn -version'
             bat 'mvn clean package'
             }
@@ -28,7 +28,7 @@ pipeline {
        }
    }
        stage("aws"){
-              steps{ bat "echo 'here steps'"
+              steps{ bat "dir"
                 sshagent(['awskey']) {
                            // some block
                            //sh "ssh -o StrictHostKeyChecking=no ec2-user@34.240.121.213 docker stop pet_clinic || true"
