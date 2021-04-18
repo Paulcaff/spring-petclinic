@@ -28,7 +28,7 @@ pipeline {
        }
    }
        stage("aws"){
-              steps{ bat "cd C:/Users/Paul"
+              steps{ sh "cd C:/Users/Paul"
                      bat "dir"
                      bat "pwd"
                      //bat " ssh -i 'sshJenkins.pem' ec2-user@ec2-34-240-121-213.eu-west-1.compute.amazonaws.com"
