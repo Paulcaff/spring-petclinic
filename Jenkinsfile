@@ -31,9 +31,9 @@ pipeline {
               steps{ bat "cd /d C:/Users/Paul"
                      bat "dir"
                      //bat " ssh -i 'sshJenkins.pem' ec2-user@ec2-34-240-121-213.eu-west-1.compute.amazonaws.com"
-                     sh "docker ps"
+                     //sh "docker ps"
                 sshagent(['awskey']) {
-
+                           sh "docker ps"
                            // some block
                            //sh "ssh -o StrictHostKeyChecking=no ec2-user@34.240.121.213 docker stop pet_clinic || true"
                            //sh "ssh -o StrictHostKeyChecking=no ec2-user@34.240.121.213 docker rm pet_clinic || true"
