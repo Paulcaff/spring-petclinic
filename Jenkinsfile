@@ -7,38 +7,39 @@ pipeline {
             bat 'mvn -version'
             bat 'mvn clean package'
             }
-        }
-   stage('Results') {
+    }
+    stage('Results') {
       steps{
         junit '**/target/surefire-reports/TEST-*.xml'
         archiveArtifacts 'target/*.jar'
-        }
       }
-   stage('Sonar'){
+    }
+    stage('Sonar'){
        steps {
            withSonarQubeEnv('SonarQube') {
                bat "mvn -Dsonar.qualitygate=true sonar:sonar"
            }
        }
-   }
+    }
     stage('Docker') {
             steps{
               bat 'docker build -t paulcaff/petclinic:0.1 .'
             }
-      }
-      stage("Push Docker"){
+    }
+    stage("Push Docker"){
           steps{
               withCredentials([string(credentialsId: 'dockerpassword', variable: 'dockerpassword')]) {
                   bat "docker login -u paulcaff -p ${dockerpassword}"
               }
-              bat 'docker push paulcaff/petclinic:0.1'
+              bat 'docker push paulcaff/petclinic:0.2'
           }
-      }
-   stage('Email Build Status'){
+    }
+    stage('Email Build Status'){
        steps{
-                  emailext to: 'paul.cafferkey@students.ittralee.ie', body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} More info at: ${env.BUILD_URL}", subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
-              }
-          }
+           emailext to: 'paul.cafferkey@students.ittralee.ie', body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} More info at: ${env.BUILD_URL}", subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
+       }
+    }
+
 //    stage("aws"){
 //                steps{
 // //                      bat "sh 'C:/Users/Paul'"
@@ -63,8 +64,9 @@ pipeline {
 
    }
    post{
-   always{
-   cleanWs()
-   }}
+        always{
+            cleanWs()
+        }
+   }
 }
 
