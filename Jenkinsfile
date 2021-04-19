@@ -16,7 +16,7 @@ pipeline {
       }
    stage('sonar'){
        steps {
-           withSonarQubeEnv('SonarQube Scanner') {
+           withSonarQubeEnv('SonarQube') {
                bat "mvn -Dsonar.qualitygate=true sonar:sonar"
            }
        }
