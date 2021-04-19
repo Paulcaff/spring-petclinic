@@ -29,7 +29,7 @@ pipeline {
       stage("Push Docker"){
           steps{
               withCredentials([string(credentialsId: 'dockerpassword', variable: 'dockerpassword')]) {
-                  bat "docker login -u paulcaff -p ${dockerpassword}"
+                  bat "docker login -u paulcaff -p paul3112!"
               }
               bat 'docker push paulcaff/petclinic:0.1'
           }
