@@ -14,6 +14,13 @@ pipeline {
         archiveArtifacts 'target/*.jar'
         }
       }
+   stage('sonar'){
+       steps {
+           withSonarQubeEnv('SonarQube Scanner') {
+               bat "mvn -Dsonar.qualitygate=true sonar:sonar"
+           }
+       }
+   }
    stage('Docker') {
          steps{
            bat 'docker build -t paulcaff/petclinic:0.1 .'
@@ -27,32 +34,33 @@ pipeline {
            bat 'docker push paulcaff/petclinic:0.1'
        }
    }
-       stage("aws"){
-               steps{
-//                      bat "sh 'C:/Users/Paul'"
-//                      bat "dir"
-//                      bat "pwd"
-//                      bat " ssh -i 'sshJenkins.pem' ec2-user@ec2-34-240-121-213.eu-west-1.compute.amazonaws.com"
-//                      sh "docker ps"
-                sshagent(['awskey']) {
-                           // some block
-                           //sh "ssh -o StrictHostKeyChecking=no ec2-user@34.240.121.213 docker stop pet_clinic || true"
-                           //sh "ssh -o StrictHostKeyChecking=no ec2-user@34.240.121.213 docker rm pet_clinic || true"
-                           //sh "ssh -o StrictHostKeyChecking=no ec2-user@34.240.121.213 docker rmi \$(docker images -a -q) || true"
-
-                           //sh "ssh -o StrictHostKeyChecking=no ec2-user@34.240.121.213 docker run -p 8080:8080 -d --name pet_clinic paulcaff/petclinic:0.1"
-                           //bat echo "here2"
-
-                       }
-
-                  }
-
+   stage('Email Build Status'){
+       steps{
+                  emailext to: 'paul.cafferkey@students.ittralee.ie', body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} More info at: ${env.BUILD_URL}", subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
               }
-       stage('Email Build Status'){
-           steps{
-               emailext to: 'paul.cafferkey@students.ittralee.ie', body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} More info at: ${env.BUILD_URL}", subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
-           }
-       }
+          }
+//    stage("aws"){
+//                steps{
+// //                      bat "sh 'C:/Users/Paul'"
+// //                      bat "dir"
+// //                      bat "pwd"
+// //                      bat " ssh -i 'sshJenkins.pem' ec2-user@ec2-34-240-121-213.eu-west-1.compute.amazonaws.com"
+// //                      sh "docker ps"
+//                 sshagent(['awskey']) {
+//                            // some block
+//                            //sh "ssh -o StrictHostKeyChecking=no ec2-user@34.240.121.213 docker stop pet_clinic || true"
+//                            //sh "ssh -o StrictHostKeyChecking=no ec2-user@34.240.121.213 docker rm pet_clinic || true"
+//                            //sh "ssh -o StrictHostKeyChecking=no ec2-user@34.240.121.213 docker rmi \$(docker images -a -q) || true"
+//
+//                            //sh "ssh -o StrictHostKeyChecking=no ec2-user@34.240.121.213 docker run -p 8080:8080 -d --name pet_clinic paulcaff/petclinic:0.1"
+//                            //bat echo "here2"
+//
+//                        }
+//
+//                   }
+//
+//               }
+
    }
 }
 
