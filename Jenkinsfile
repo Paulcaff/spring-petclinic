@@ -40,27 +40,27 @@ pipeline {
        }
     }
 
-//    stage("aws"){
-//                steps{
-// //                      bat "sh 'C:/Users/Paul'"
-// //                      bat "dir"
-// //                      bat "pwd"
-// //                      bat " ssh -i 'sshJenkins.pem' ec2-user@ec2-34-240-121-213.eu-west-1.compute.amazonaws.com"
-// //                      sh "docker ps"
-//                 sshagent(['awskey']) {
-//                            // some block
-//                            //sh "ssh -o StrictHostKeyChecking=no ec2-user@34.240.121.213 docker stop pet_clinic || true"
-//                            //sh "ssh -o StrictHostKeyChecking=no ec2-user@34.240.121.213 docker rm pet_clinic || true"
-//                            //sh "ssh -o StrictHostKeyChecking=no ec2-user@34.240.121.213 docker rmi \$(docker images -a -q) || true"
-//
-//                            //sh "ssh -o StrictHostKeyChecking=no ec2-user@34.240.121.213 docker run -p 8080:8080 -d --name pet_clinic paulcaff/petclinic:0.1"
-//                            //bat echo "here2"
-//
-//                        }
-//
-//                   }
-//
-//               }
+   stage("aws"){
+               steps{
+//                      bat "sh 'C:/Users/Paul'"
+//                      bat "dir"
+//                      bat "pwd"
+//                      bat " ssh -i 'sshJenkins.pem' ec2-user@ec2-34-240-121-213.eu-west-1.compute.amazonaws.com"
+//                      sh "docker ps"
+                sshagent(['awskey']) {
+                           // some block
+                           //sh "ssh -o StrictHostKeyChecking=no ec2-user@34.240.121.213 docker stop pet_clinic || true"
+                           //sh "ssh -o StrictHostKeyChecking=no ec2-user@34.240.121.213 docker rm pet_clinic || true"
+                           //sh "ssh -o StrictHostKeyChecking=no ec2-user@34.240.121.213 docker rmi \$(docker images -a -q) || true"
+
+                           sh "'C:/Program Files/Git/usr/bin/ssh' -o StrictHostKeyChecking=no ec2-user@34.240.121.213 docker run -p 8080:8080 -d --name pet_clinic paulcaff/petclinic:0.1"
+                           //bat echo "here2"
+
+                       }
+
+                  }
+
+              }
 
    }
 //    post{
