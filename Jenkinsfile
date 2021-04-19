@@ -24,7 +24,7 @@ pipeline {
     stage('Docker') {
             steps{
               bat 'docker logout'
-              bat 'docker login'
+              bat "docker login -u paulcaff -p paul3112"
               bat 'docker build -t paulcaff/petclinic:0.1 .'
             }
     }
