@@ -21,19 +21,19 @@ pipeline {
            }
        }
    }
-   stage('Docker') {
-         steps{
-           bat 'docker build -t paulcaff/petclinic:0.1 .'
-         }
-   }
-   stage("Push Docker"){
-       steps{
-           withCredentials([string(credentialsId: 'dockerpassword', variable: 'dockerpassword')]) {
-               bat "docker login -u paulcaff -p ${dockerpassword}"
-           }
-           bat 'docker push paulcaff/petclinic:0.1'
-       }
-   }
+    stage('Docker') {
+            steps{
+              bat 'docker build -t paulcaff/petclinic:0.1 .'
+            }
+      }
+      stage("Push Docker"){
+          steps{
+              withCredentials([string(credentialsId: 'dockerpassword', variable: 'dockerpassword')]) {
+                  bat "docker login -u paulcaff -p ${dockerpassword}"
+              }
+              bat 'docker push paulcaff/petclinic:0.1'
+          }
+      }
    stage('Email Build Status'){
        steps{
                   emailext to: 'paul.cafferkey@students.ittralee.ie', body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} More info at: ${env.BUILD_URL}", subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
