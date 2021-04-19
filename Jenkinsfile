@@ -31,7 +31,7 @@ pipeline {
            withCredentials([string(credentialsId: 'dockerpassword', variable: 'dockerpassword')]) {
                bat "docker login -u paulcaff -p ${dockerpassword}"
            }
-           bat 'docker push paulcaff/petclinic:0.1'
+           bat 'docker push paulcaff/petclinic:2.0.1.1'
        }
    }
    stage('Email Build Status'){
