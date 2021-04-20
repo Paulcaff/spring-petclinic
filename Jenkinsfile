@@ -3,7 +3,6 @@ pipeline {
    stages{
     stage('Build') {
         steps{
-            bat "dir"
             bat 'mvn -version'
             bat 'mvn clean package'
             }
@@ -49,19 +48,15 @@ pipeline {
                sh "'C:/Program Files/Git/usr/bin/ssh' -o StrictHostKeyChecking=no ec2-user@34.240.121.213 docker rmi \$(docker images -a -q) || true"
 
                sh "'C:/Program Files/Git/usr/bin/ssh' -o StrictHostKeyChecking=no ec2-user@34.240.121.213 docker run -p 8080:8080 -d --name pet_clinic paulcaff/petclinic:0.1"
-               //bat echo "here2"
-
                        }
-
                   }
-
               }
 
    }
-//    post{
-//         always{
-//             cleanWs()
-//         }
-//    }
+   post{
+        always{
+            cleanWs()
+        }
+   }
 }
 
